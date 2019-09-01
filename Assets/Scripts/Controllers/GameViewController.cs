@@ -17,4 +17,20 @@ public class GameViewController : MonoBehaviour
     {
         
     }
+
+
+    public void StartButton()
+    {
+
+    }
+
+    public void PauseButton()
+    {
+
+    }
+
+    public void SetSound()
+    {
+
+    }
 }

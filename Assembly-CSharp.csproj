@@ -72,12 +72,13 @@
     <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
     <Compile Include="Assets\Scripts\Controllers\GameViewController.cs" />
     <Compile Include="Assets\Scripts\Controllers\IntroGameViewController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\Controllers\StaticsGameViewController.cs" />
+    <Compile Include="Assets\Scripts\Creators\SceneManager.cs" />
     <Compile Include="Assets\Scripts\Enums\AITankStrategy.cs" />
     <Compile Include="Assets\Scripts\Enums\ShootType.cs" />
     <Compile Include="Assets\Scripts\Enums\Sounds.cs" />
     <Compile Include="Assets\Scripts\Enums\TankType.cs" />
-    <Compile Include="Assets\Scripts\Managers\SceneManager.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/proyectospersonales/Tanks/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
