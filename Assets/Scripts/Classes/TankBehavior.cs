@@ -7,7 +7,9 @@ public class TankBehavior : MonoBehaviour
     Rigidbody rigidbody;
     public float movementSpeed = 20f;
 
-    public bool invertupdowndir = false;
+    public bool invertVerticalMovement = false;
+    public bool invertHorizontal = false;
+
 
     bool IsButtonMovingPressed = false;
 
@@ -30,11 +32,12 @@ public class TankBehavior : MonoBehaviour
     {
 
       
-        rigidbody.centerOfMass = centerofmass;
+      rigidbody.centerOfMass = centerofmass;
     
         if (IsButtonMovingPressed) {
 
 
+            
             // Bit shift the index of the layer (8) to get a bit mask
             int layerMask = 0 << 8;
 
@@ -44,23 +47,39 @@ public class TankBehavior : MonoBehaviour
 
             RaycastHit hit;
             // Does the ray intersect any objects excluding the player layer
-            Quaternion qua = this.transform.rotation;
-            if (Physics.OverlapBox((this.transform.position + this.transform.forward * this.transform.localScale.z /2)  + ((this.transform.forward  ) * movementSpeed * Time.fixedDeltaTime), this.transform.localScale / 2, qua,0).Length> 0)
-            {
-                //Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.yellow);
-                //Debug.Log("Did Hit");
+            float  fdistance =   movementSpeed * Time.fixedDeltaTime *2;
+            if (
+            Physics.BoxCast(this.transform.position, this.transform.localScale , this.transform.forward, out hit, this.transform.rotation, fdistance, layerMask) 
+           
+            ){
+                Debug.Log(Time.time + " Box Cast "+this.gameObject.name);
+           
+                Debug.Log(Time.time+" "+(hit.transform.gameObject.name));
+                Debug.Log(Time.time+" "+(hit.distance.ToString()));
+                Debug.Log(Time.time+" "+(hit.point.ToString()));
+                Debug.Log(Time.time+" "+(this.transform.position - hit.transform.position));
+
+                if (hit.distance < 1) { 
+                Debug.Log(Time.time + " NO MOVEMENT");
+                }
                 return;
+               
             }
 
+        
+            this.rigidbody.MovePosition(this.transform.position + (this.transform.forward * fdistance));
+            
 
-            this.rigidbody.MovePosition(this.transform.position + (this.transform.forward) * movementSpeed * Time.fixedDeltaTime);
-
-
-
+      
         }
 
+        // nosirvio
+        //   this.rigidbody.AddForce(this.transform.forward * movementSpeed * Time.fixedDeltaTime * 10);
 
-     
+
+
+
+
     }
 
     // Update is called once per frame
@@ -74,26 +93,33 @@ public class TankBehavior : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-          if(!invertupdowndir)
+          if(!invertVerticalMovement)
             yangle = 0;
           else
                 yangle = 180;
         }
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if (!invertupdowndir)
+            if (!invertVerticalMovement)
                 yangle = 180;
             else
                 yangle = 0;
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
+            if(!invertHorizontal)
             yangle = 270;
+            else
+                yangle = 90;
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-               
-            yangle = 90;
+
+            if (!invertHorizontal)
+                yangle = 90;
+            else
+                yangle = 270;
+
         }
 
 
@@ -124,6 +150,11 @@ public class TankBehavior : MonoBehaviour
 
             lastTime = Time.time;
         }
+        /*
+        if (IsButtonMovingPressed) {
+            this.rigidbody.AddForce(this.transform.forward * movementSpeed * Time.deltaTime );
+
+        }*/
 
     }
 }
