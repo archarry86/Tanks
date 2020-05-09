@@ -76,11 +76,13 @@
     <Compile Include="Assets\Scripts\Controllers\IntroGameViewController.cs" />
     <Compile Include="Assets\Scripts\Controllers\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\Controllers\StaticsGameViewController.cs" />
-    <Compile Include="Assets\Scripts\Creators\SceneManager.cs" />
+    <Compile Include="Assets\Scripts\Creators\SceneCreator.cs" />
     <Compile Include="Assets\Scripts\Enums\AITankStrategy.cs" />
+    <Compile Include="Assets\Scripts\Enums\EnumExtencions.cs" />
     <Compile Include="Assets\Scripts\Enums\ShootType.cs" />
     <Compile Include="Assets\Scripts\Enums\Sounds.cs" />
     <Compile Include="Assets\Scripts\Enums\TankType.cs" />
+    <Compile Include="Assets\Scripts\Enums\WallType.cs" />
     <Compile Include="Assets\Scripts\Grid\Grid.cs" />
     <Compile Include="Assets\Util\ObjectData.cs" />
     <None Include="Assets\Shaders\GridShader.shader" />

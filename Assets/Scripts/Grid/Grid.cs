@@ -5,12 +5,21 @@ using System.ComponentModel;
 public class Grid {
 
 
-    private int[,] cells;
+    private int[,] matrix;
+
+    public int[,] Matrix {
+        get {
+            return matrix;
+        }
+    }
 
     private int rows;
     private int cols;
     private int width;
     private int height;
+
+
+    private Vector3 size = new Vector3();
 
     public Grid(int rows, int cols, int width, int height, bool debugird = true) {
 
@@ -19,14 +28,16 @@ public class Grid {
         this.width = width;
         this.height = height;
 
-        cells = new int[rows, cols];
+        size = new Vector3(width,0, this.height);
+
+        matrix = new int[rows, cols];
 
         int index = 0;
-        for (int i = 0; i < cells.GetLength(0); i++) {
+        for (int i = 0; i < matrix.GetLength(0); i++) {
 
-            for (int j = 0; j < cells.GetLength(1); j++) {
+            for (int j = 0; j < matrix.GetLength(1); j++) {
 
-                cells[i, j] = index;
+                matrix[i, j] = index;
                 index++;
 
             }
@@ -42,14 +53,17 @@ public class Grid {
 
            // Debug.DrawLine(Vector3.zero, new Vector3(60,10,52), color, timeduration);
 
-            for (int x = 0; x < cells.GetLength(0); x++) {
+            for (int x = 0; x < matrix.GetLength(0); x++) {
 
-                for (int y = 0; y < cells.GetLength(1); y++) {
+                for (int y = 0; y < matrix.GetLength(1); y++) {
 
                   
                     Debug.DrawLine(getPosition(x, y), getPosition(x, y + 1), color, timeduration);
 
                     Debug.DrawLine(getPosition(x, y), getPosition(x+1, y ), color, timeduration);
+
+
+                    Debug.DrawLine(getPosition(x, y), getWorldPosition(x, y ), Color.red, timeduration);
 
                 }
 
@@ -68,7 +82,14 @@ public class Grid {
     }
 
 
- 
+    public Vector3 getWorldPosition(int x, int y) {
+
+
+        return new Vector3(x * width, 0, y * height)+ (size * 0.5f);
+    }
+
+    //metodo que convierta las coordenadas del mouse en el mundo y luego se transforme a get world position
+
 
 
 
