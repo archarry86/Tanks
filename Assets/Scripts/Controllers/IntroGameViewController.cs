@@ -81,8 +81,8 @@ public class IntroGameViewController : MonoBehaviour
 
         if (wasset) {
 
-            Debug.Log(" iterations  "+iterations);
-            Debug.Log(" SelectorElement.rectTransform.position " + SelectorElement.rectTransform.position);
+            //Debug.Log(" iterations  "+iterations);
+            //Debug.Log(" SelectorElement.rectTransform.position " + SelectorElement.rectTransform.position);
         }
       
 

@@ -73,6 +73,7 @@
     <Compile Include="Assets\Scripts\Controllers\AudioController.cs" />
     <Compile Include="Assets\Scripts\Controllers\GameController.cs" />
     <Compile Include="Assets\Scripts\Controllers\GameViewController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\GridTestingController.cs" />
     <Compile Include="Assets\Scripts\Controllers\IntroGameViewController.cs" />
     <Compile Include="Assets\Scripts\Controllers\SceneLoader.cs" />
     <Compile Include="Assets\Scripts\Controllers\StaticsGameViewController.cs" />

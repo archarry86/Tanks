@@ -25,14 +25,14 @@ public class TankBehavior : MonoBehaviour
 
         rigidbody = transform.GetComponent<Rigidbody>();
 
-        centerofmass = rigidbody.centerOfMass;
+        centerofmass = this.transform.position;
     }
 
     private void FixedUpdate()
     {
 
       
-      rigidbody.centerOfMass = centerofmass;
+      //rigidbody.centerOfMass = centerofmass;
     
         if (IsButtonMovingPressed) {
 
@@ -43,8 +43,8 @@ public class TankBehavior : MonoBehaviour
 
             // This would cast rays only against colliders in layer 8.
             // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
-            layerMask = ~layerMask;
-
+            layerMask = LayerMask.GetMask("Tanks"); 
+           
             RaycastHit hit;
             // Does the ray intersect any objects excluding the player layer
             float  fdistance =   movementSpeed * Time.fixedDeltaTime *2;
@@ -52,17 +52,18 @@ public class TankBehavior : MonoBehaviour
             Physics.BoxCast(this.transform.position, this.transform.localScale , this.transform.forward, out hit, this.transform.rotation, fdistance, layerMask) 
            
             ){
-                Debug.Log(Time.time + " Box Cast "+this.gameObject.name);
-           
-                Debug.Log(Time.time+" "+(hit.transform.gameObject.name));
-                Debug.Log(Time.time+" "+(hit.distance.ToString()));
-                Debug.Log(Time.time+" "+(hit.point.ToString()));
-                Debug.Log(Time.time+" "+(this.transform.position - hit.transform.position));
+               // //Debug.Log(Time.time + " Box Cast "+this.gameObject.name);
+               //
+               // //Debug.Log(Time.time+" "+(hit.transform.gameObject.name));
+               // //Debug.Log(Time.time+" "+(hit.distance.ToString()));
+               // //Debug.Log(Time.time+" "+(hit.point.ToString()));
+               // //Debug.Log(Time.time+" "+(this.transform.position - hit.transform.position));
 
-                if (hit.distance < 1) { 
-                Debug.Log(Time.time + " NO MOVEMENT");
+                if (hit.distance < 1) {
+                    // //Debug.Log(Time.time + " NO MOVEMENT");
+                   return;
                 }
-                return;
+               
                
             }
 
@@ -85,7 +86,7 @@ public class TankBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        IsButtonMovingPressed = Input.GetKey(KeyCode.Space);
+        IsButtonMovingPressed = false;
 
 
 
@@ -93,13 +94,18 @@ public class TankBehavior : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
-          if(!invertVerticalMovement)
+           
+          if (!invertVerticalMovement)
             yangle = 0;
           else
                 yangle = 180;
         }
+
+        
+
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+         
             if (!invertVerticalMovement)
                 yangle = 180;
             else
@@ -107,14 +113,15 @@ public class TankBehavior : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            if(!invertHorizontal)
+           
+            if (!invertHorizontal)
             yangle = 270;
             else
                 yangle = 90;
         }
         if (Input.GetKeyDown(KeyCode.RightArrow))
         {
-
+          
             if (!invertHorizontal)
                 yangle = 90;
             else
@@ -122,8 +129,10 @@ public class TankBehavior : MonoBehaviour
 
         }
 
+      
+        IsButtonMovingPressed = Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow);
 
-    
+
 
         if (yangle > -1)
         {

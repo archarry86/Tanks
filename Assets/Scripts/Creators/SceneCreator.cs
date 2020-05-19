@@ -6,10 +6,46 @@ using UnityEngine;
 
 public abstract class SceneCreator {
 
+
+
     public virtual int[,] Matrix {
         get {
             return null;
         }
+    }
+
+
+    public void SetCellValue(int row, int col, int value  ) {
+
+        if (Matrix != null) {
+            //Debug.Log("SetCellValue " + row + " " + col);
+            Matrix[row, col] = value;
+        }
+    }
+
+
+    public override string ToString() {
+        StringBuilder bld = new StringBuilder();
+        for (int rows = Matrix.GetLength(0) - 1; rows > -1; rows--) {
+
+
+            var val = Matrix[rows, 0];
+            bld.Append(val);
+
+            for (int columns = 1; columns < Matrix.GetLength(1); columns++) {
+
+                val = Matrix[rows, columns];
+                bld.Append("\t" + val);
+
+            }
+
+
+            bld.AppendLine();
+
+        }
+
+        return bld.ToString();
+
     }
 
 }
@@ -28,32 +64,18 @@ public class SceneCreatorOne : SceneCreator {
         matrix = new int[rows, cols];
         matrix[0, 0] = 1;
 
-    }
 
+        matrix[0, cols - 1] = 1;
 
-    public override string ToString() {
-        StringBuilder bld = new StringBuilder();
-        for (int rows = matrix.GetLength(0) - 1; rows > -1; rows--) {
-
-
-            var val = matrix[rows, 0];
-            bld.Append(val);
-
-            for (int columns = 1; columns < matrix.GetLength(1); columns++) {
-
-                val = matrix[rows, columns];
-                bld.Append("\t" + val);
-
-            }
-
-
-            bld.AppendLine();
-
-        }
-
-        return bld.ToString();
+        matrix[rows-1, cols-1] = 2;
+        // matrix[rows - 1, cols - 2] = 2;
+        // matrix[rows - 1, 1] = 2;
+         matrix[rows - 1, 0] = 2;
 
     }
+
+
+
 }
 
 
@@ -79,14 +101,18 @@ public class SceneCreatorCharry : SceneCreator {
         //guardarla cuando se tengan algoritmos bien definidos
         //Random.seed = 0;
 
-        int[] walls = new int[] { (int)WallType.brick, (int)WallType.solid };
+        //por ahora
+
+        int[] walls = new int[] { 
+            (int)WallType.brick, 
+            (int)WallType.solid };
 
 
         List<int> columns = Enumerable.Range(0, numberofcolumns).ToList();
 
-        Debug.Log(" columns " + string.Join(",", columns.ToArray()).ToString());
+        //Debug.Log(" columns " + string.Join(",", columns.ToArray()).ToString());
         bool inprocess = true;
-        Debug.Log(" Start " + columns.Count);
+        //Debug.Log(" Start " + columns.Count);
         var indexcolumn = 0;
         while (inprocess) {
 
@@ -120,7 +146,7 @@ public class SceneCreatorCharry : SceneCreator {
 
                 numberofwalls += indexrow;
 
-                Debug.Log(" indexcolumn " + indexcolumn + " indexrow " + indexrow);
+                //Debug.Log(" indexcolumn " + indexcolumn + " indexrow " + indexrow);
 
                 switch (method) {
 
@@ -152,12 +178,20 @@ public class SceneCreatorCharry : SceneCreator {
                             numberofwalls++;
 
                         }
+                        var secondamount = (int)Random.Range(1, 3);
 
 
+                        for (int i = 0; i < secondamount && indexrow < numberofrows; i++, indexrow++) {
 
-                        var secondamount = (int)Random.Range(1, amount + 1);
 
-                        for (int i = 0; i < amount && indexrow < numberofrows; i++, indexrow++) {
+                            numberofwalls++;
+                            indexrow++;
+
+                        }
+
+                         secondamount = (int)Random.Range(0, 4);
+
+                        for (int i = 0; i < (secondamount) && indexrow < numberofrows; i++, indexrow++) {
 
                             if (indexrow < numberofrows) {
                                 matrix[indexrow, indexcolumn] = opositewall;
@@ -185,9 +219,9 @@ public class SceneCreatorCharry : SceneCreator {
                         numberofwalls++;
                         indexrow++;
 
-                        secondamount = (int)Random.Range(1, amount + 1);
+                        secondamount = (int)Random.Range(0, 3);
 
-                        for (int i = 0; i < amount && indexrow < numberofrows; i++, indexrow++) {
+                        for (int i = 0; i < secondamount && indexrow < numberofrows; i++, indexrow++) {
 
 
                             matrix[indexrow, indexcolumn] = opositewall;
@@ -221,7 +255,7 @@ public class SceneCreatorCharry : SceneCreator {
             indexcolumn++;
         }
 
-        Debug.Log(" end " + columns.Count);
+        //Debug.Log(" end " + columns.Count);
 
     }
 
@@ -278,8 +312,6 @@ public class SceneCreatorPanqueva : SceneCreator {
                 else {
                     matrix[rows, columns] = 0;
                 }
-
-
 
             }
 
